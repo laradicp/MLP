@@ -12,7 +12,7 @@ for instance in instances/*; do
 	echo "Instance $k of 22" 
 
 	for i in {1..10}; do
-		./tsp ${instance} | grep 'Custo\|Tempo' | awk "{print $1}" >> ./benchmark/bm.txt
+		./mlp ${instance} | grep 'Custo\|Tempo' | awk "{print $1}" >> ./benchmark/bm.txt
 	done
 
 	k=$(($k + 1))
