@@ -7,6 +7,7 @@ CPPC = g++
 
 #### opcoes de compilacao e includes
 CCOPT = $(BITS_OPTION) -O3 -fPIC -fexceptions -DNDEBUG -DIL_STD -std=c++0x
+#CCOPT = $(BITS_OPTION) -g -fPIC -fexceptions -DNDEBUG -DIL_STD -std=c++0x
 CONCERTINCDIR = $(CONCERTDIR)/include
 #############################
 
@@ -26,6 +27,7 @@ OBJS = $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRCS))
 #### regra principal, gera o executavel
 mlp: $(OBJS) 
 	@echo  "\033[31m \nLinking all objects files: \033[0m"
+	#$(CPPC) $(BITS_OPTION) $(OBJS) -g -o $@ $(CCLNFLAGS)
 	$(CPPC) $(BITS_OPTION) $(OBJS) -o $@ $(CCLNFLAGS)
 ############################
 
