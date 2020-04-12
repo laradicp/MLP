@@ -18,14 +18,18 @@ class ILS
 
         void reOptPreProcessing(int dimension, double **distancia, std::vector<std::vector<std::vector<double>>> &reOpt, int begin);
 
-        void rvnd(int dimension, double ** distancia, std::vector<int> movimentosDeVizinhanca,
-        Vizinhancas vizinhancas, std::vector<std::vector<std::vector<double>>> &reOpt, double *custo);
+        void rvnd(int dimension, double ** distancia, std::vector<std::vector<std::vector<double>>> &reOpt, double *custo);
 
         void perturbacao(int dimension);
+
+        std::chrono::duration<double> getTimePreProcessing();
+
+        Vizinhancas vizinhancas;
 
     private:
         int I;
         std::vector<int> s;
+        std::chrono::duration<double> timePreProcessing;
         typedef struct {
             double custo;
             int I;

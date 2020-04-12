@@ -7,6 +7,9 @@ ILS::ILS(int dimension)
         I = 100;
 	else
         I = dimension;
+
+    auto time = std::chrono::system_clock::now();
+    timePreProcessing = time - time;
 }
 
 int ILS::getI()
@@ -56,6 +59,7 @@ void ILS::construcao(int dimension, double ** distancia)
 
 void ILS::reOptPreProcessing(int dimension, double **distancia, std::vector<std::vector<std::vector<double>>> &reOpt, int begin)
 {
+    auto inicio = std::chrono::system_clock::now();
 	//T: duracao (0)
 	//C: custo (1)
 	//W: numero de cidades (desconsidera depositos) (2)
@@ -81,7 +85,7 @@ void ILS::reOptPreProcessing(int dimension, double **distancia, std::vector<std:
 				if (j < begin) continue;
 
 				reOpt[2][i][j] = reOpt[2][i][j - 1] + reOpt[2][j][j]; //comeca a preencher com i = 0 e j = 1, logo j - 1 == 0 == i
-				// //progressivamente se estabelecem as subsequencias
+				//progressivamente se estabelecem as subsequencias
 				reOpt[0][i][j] = reOpt[0][i][j - 1] + distancia[s[j - 1]][s[j]];
 				reOpt[1][i][j] = reOpt[1][i][j - 1] + reOpt[2][j][j] * (reOpt[0][i][j - 1] + distancia[s[j - 1]][s[j]]) + reOpt[1][j][j];
 
@@ -92,7 +96,6 @@ void ILS::reOptPreProcessing(int dimension, double **distancia, std::vector<std:
 			}
 		else
 		{
-			//i + t - 1 >= begin, logo i >= begin - t + 1
 			for (unsigned int i = 0, j; i < begin; i++) //i varia de 0 a begin - 1
 			{
 				j = i + t - 1; //i e j sao as extremidades de um percurso de tamanho t
@@ -127,11 +130,15 @@ void ILS::reOptPreProcessing(int dimension, double **distancia, std::vector<std:
 			}
 		}
 	}
+    auto fim = std::chrono::system_clock::now();
+    timePreProcessing += fim - inicio;
 }
 
-void ILS::rvnd(int dimension, double ** distancia, std::vector<int> movimentosDeVizinhanca, Vizinhancas vizinhancas,
-std::vector<std::vector<std::vector<double>>> &reOpt, double *custo)
+void ILS::rvnd(int dimension, double ** distancia, std::vector<std::vector<std::vector<double>>> &reOpt, double *custo)
 {
+    std::vector<int> movimentosDeVizinhanca;
+    vizinhancas.preencheMovimentos(movimentosDeVizinhanca);
+
     while (movimentosDeVizinhanca.size() > 0) {
         int vizinho = rand() % movimentosDeVizinhanca.size(), aux;
 
@@ -290,4 +297,9 @@ void ILS::perturbacao(int dimension)
         s.insert(s.begin() + ar[0], s[ar[2] + i]);
         s.erase(s.begin() + ar[2] + i + 1);
     }
+}
+
+std::chrono::duration<double> ILS::getTimePreProcessing()
+{
+    return timePreProcessing;
 }

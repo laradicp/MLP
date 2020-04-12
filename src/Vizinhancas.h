@@ -2,6 +2,8 @@
 #define VIZINHANCAS_H
 #include <iostream>
 #include <vector>
+#include <ctime>
+#include <chrono>
 
 class Vizinhancas
 {
@@ -25,9 +27,16 @@ class Vizinhancas
 
         double getMelhorCusto();
 
+        std::chrono::duration<double> getTimeSwap();
+        std::chrono::duration<double> getTimeReInsertion();
+        std::chrono::duration<double> getTime2Opt();
+
     private:
         int I, J;
 	    double melhorCusto;
+        std::chrono::duration<double> timeSwap;
+        std::chrono::duration<double> timeReInsertion;
+        std::chrono::duration<double> time2Opt;
 };
 
 #endif

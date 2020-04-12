@@ -6,10 +6,15 @@ Vizinhancas::Vizinhancas()
     I = 0;
     J = 0;
     melhorCusto = __DBL_MAX__;
+	auto time = std::chrono::system_clock::now();
+	timeSwap = time - time;
+	timeReInsertion = time - time;
+	time2Opt = time - time;
 }
 
 void Vizinhancas::swap(double **distancia, int dimension, std::vector<int> &s, std::vector<std::vector<std::vector<double>>> &reOpt,
 double melhorCusto) {
+	auto inicio = std::chrono::system_clock::now();
 	int melhorI = 0, melhorJ = 0, tamanho = s.size();
 	double custo;
 	
@@ -43,10 +48,14 @@ double melhorCusto) {
 	I = melhorI;
 	J = melhorJ;
 	this->melhorCusto = melhorCusto;
+	
+	auto fim = std::chrono::system_clock::now();
+	timeSwap += fim - inicio;
 }
 
 void Vizinhancas::n_re_insertion (double **distancia, int dimension, std::vector<int> &s,
 std::vector<std::vector<std::vector<double>>> &reOpt, int n, double melhorCusto) {
+	auto inicio = std::chrono::system_clock::now();
 	int melhorI = 0, melhorJ = 0, tamanho = s.size();
 	double custo;
 	
@@ -121,10 +130,14 @@ std::vector<std::vector<std::vector<double>>> &reOpt, int n, double melhorCusto)
 	I = melhorI;
 	J = melhorJ;
 	this->melhorCusto = melhorCusto;
+
+	auto fim = std::chrono::system_clock::now();
+	timeReInsertion += fim - inicio;
 }
 
 void Vizinhancas::opt_2(double **distancia, int dimension, std::vector<int> &s, std::vector<std::vector<std::vector<double>>>
 &reOpt, double melhorCusto) {
+	auto inicio = std::chrono::system_clock::now();
 	int melhorI = 0, melhorJ = 0, tamanho = s.size();
 	double custo;
 	
@@ -145,6 +158,9 @@ void Vizinhancas::opt_2(double **distancia, int dimension, std::vector<int> &s, 
 	I = melhorI;
 	J = melhorJ;
 	this->melhorCusto = melhorCusto;
+
+	auto fim = std::chrono::system_clock::now();
+	time2Opt += fim - inicio;
 }
 
 void Vizinhancas::preencheMovimentos(std::vector<int> &movimentosDeVizinhanca)
@@ -170,4 +186,17 @@ int Vizinhancas::getJ()
 double Vizinhancas::getMelhorCusto()
 {
     return melhorCusto;
+}
+
+std::chrono::duration<double> Vizinhancas::getTimeSwap()
+{
+	return timeSwap;
+}
+std::chrono::duration<double> Vizinhancas::getTimeReInsertion()
+{
+	return timeReInsertion;
+}
+std::chrono::duration<double> Vizinhancas::getTime2Opt()
+{
+	return time2Opt;
 }
