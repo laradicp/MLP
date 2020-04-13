@@ -16,8 +16,7 @@ int main(int argc, char** argv) {
 	auto inicio = chrono::system_clock::now();
 
 	vector<int> melhorSAtual, melhorS;
-	vector<vector<vector<double>>> reOpt(3, vector<vector<double>>(dimension + 1,
-	vector<double>(dimension + 1, 0)));
+	vector<vector<vector<double>>> reOpt(3, vector<vector<double>>(dimension + 1, vector<double>(dimension + 1, 0)));
 	double melhorCusto = __DBL_MAX__;
 	ILS ils = ILS(dimension);
 	int numEscapes = 0, numVezes = 0, numMelhorias = 0, ultimaMelhoria;

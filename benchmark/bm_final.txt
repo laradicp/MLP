@@ -90,7 +90,3 @@ instances/swiss42.tsp
 Custo: 22327.000000
 Tempo: 0.213883
 
--
-Custo: 22327.000000
-Tempo: 0.220482
-
